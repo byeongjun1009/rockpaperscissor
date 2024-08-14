@@ -23,17 +23,49 @@ const choice = {
     img: "https://th.bing.com/th/id/OIP.iTwcNNAT8EJeUtcqf07WMwHaE9?rs=1&pid=ImgDetMain"
   }
 }
+
 function App() {
   const [userSelect, setUserSelect] = useState(null)
+  const [computerSelect, setComputerSelect] = useState(null)
+  
+  const [result, setResult] = useState("")
 
   const play = (userChoice) => {
     setUserSelect(choice[userChoice])
+    let computerChoice = randomChoice()
+    setComputerSelect(choice[computerChoice])
+    setResult(judgement(choice[userChoice], choice[computerChoice]))
   };
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice); // 객체에 키값만 뽑아서 배열로 만들어주는 함수다.
+    let randomItem = Math.floor(Math.random()*itemArray.length)
+    let final = itemArray[randomItem]
+    return final
+  };
+
+  const judgement = (userChoice, computerChoice) => {
+      if (userChoice.name === computerChoice.name) {
+        return "tie"
+      } else {
+        if (userChoice.name === choice.rock.name) {
+          return computerChoice.name === choice.scissors.name?"win":"lose"
+        }
+        if (userChoice.name === choice.scissors.name) {
+          return computerChoice.name === choice.paper.name?"win":"lose"
+        }
+        if (userChoice.name === choice.paper.name) {
+          return computerChoice.name === choice.rock.name?"win":"lose"
+        }
+      }      
+  }
+  
+
   return (
     <div>
       <div className='main'>
-        <Box title="you" item={userSelect} result="Loser"/>
-        {/* <Box title="computer" result="winner"/> */}
+        <Box title="you" item={userSelect} result={result}/>
+        <Box title="computer" item={computerSelect} result={result}/>
       </div>
       <div className='main'>
         {/* 함수를 호출하는 형태가 아닌 콜백하는 형태를 넣어줘야 함 */}
@@ -43,6 +75,6 @@ function App() {
       </div>
     </div>
   );
-}
+  }
 
 export default App;

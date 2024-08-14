@@ -7,7 +7,20 @@
   text-align: center;
   width: 500px;
   height: 500px;
+  margin: 10px;
+}
+
+.win {
+  border: 3px solid green;
+  color: green;
+}
+.lose {
   border: 3px solid red;
+  color: red;
+}
+.tie {
+  border: 3px solid black;
+  color: black;
 }
 
 .box img {
